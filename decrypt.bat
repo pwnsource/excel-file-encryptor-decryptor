@@ -21,6 +21,9 @@ if errorlevel 1 (
     pip install cryptography
 )
 
+REM Navigate to the src folder
+cd src
+
 REM Run the Python script
 python decrypt.py
 
