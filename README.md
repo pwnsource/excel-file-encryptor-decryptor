@@ -6,6 +6,7 @@ Encrypt Excel files to protect sensitive data.
 Decrypt encrypted Excel files to access the original data.
 Simple command-line interface for ease of use.
 Prerequisites
+If error happens then you will get logs folder and inside is whole info.
 Before running the script, make sure you have the following installed:
 
 Python 3.x
