@@ -6,7 +6,7 @@ key = Fernet.generate_key()
 cipher_suite = Fernet(key)
 
 # Input filename
-file_path = input("Enter the path of the Excel file: ")
+file_path = input("Enter the name of original Excel file: ")
 
 try:
     # Load the Excel file
@@ -20,7 +20,7 @@ try:
                 cell.value = cipher_suite.encrypt(str(cell.value).encode())
 
     # Save the encrypted Excel file
-    encrypted_file_path = input("Enter the nameo of the encrypted file (needs to end with .xlsx): ")
+    encrypted_file_path = input("Enter the name of the encrypted file (needs to end with .xlsx): ")
     workbook.save(encrypted_file_path)
 
     # Store the encryption key securely
