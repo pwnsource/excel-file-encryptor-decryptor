@@ -1,14 +1,30 @@
+import os
+import datetime
 from cryptography.fernet import Fernet
 from openpyxl import load_workbook
 
-# Generate a key for encryption
-key = Fernet.generate_key()
-cipher_suite = Fernet(key)
+def log_error(error_message):
+    timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    log_dir = os.path.join(os.path.dirname(__file__), '..', 'logs')
+    log_file_path = os.path.join(log_dir, 'encrypter_log.txt')
 
-# Input filename
-file_path = input("Enter the name of original Excel file: ")
+    # Check if the logs directory exists, if not, create it
+    if not os.path.exists(log_dir):
+        os.makedirs(log_dir)
+
+    with open(log_file_path, 'a') as log_file:
+        log_file.write(f"[{timestamp}] {error_message}\n")
 
 try:
+    # Load the encryption key
+    with open(os.path.join(os.path.dirname(__file__), '..', 'encryption_key.txt'), 'rb') as key_file:
+        key = key_file.read()
+
+    cipher_suite = Fernet(key)
+
+    # Input filename
+    file_path = input("Enter the name of the original Excel file: ")
+
     # Load the Excel file
     workbook = load_workbook(filename=file_path)
 
@@ -24,8 +40,15 @@ try:
     workbook.save(encrypted_file_path)
 
     # Store the encryption key securely
-    with open('encryption_key.txt', 'wb') as key_file:
+    with open(os.path.join(os.path.dirname(__file__), '..', 'encryption_key.txt'), 'wb') as key_file:
         key_file.write(key)
 
 except FileNotFoundError:
-    print("File not found.")
+    error_message = "File not found."
+    print(error_message)
+    log_error(error_message)
+
+except Exception as e:
+    error_message = f"An error occurred: {e}"
+    print(error_message)
+    log_error(error_message)
