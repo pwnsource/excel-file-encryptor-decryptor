@@ -15,7 +15,7 @@ openpyxl
 
 
 You can install the required libraries using pip:
-pip install cryptography openpyxl
+pip install cryptography openpyxl (if using .bat file then downloads automatically if needed.)
 
 
 **Usage**
